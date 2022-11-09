@@ -1,0 +1,16 @@
+module.exports={
+    userType:{
+        hr:"HR",
+        admin:"ADMIN",
+        jobseeker:"JOBSEEKER"
+    },
+    userStatus:{
+        approved:"APPROVED",
+        rejected:"REJECTED",
+        pending:"PENDING"
+    },
+   jobStatus:{
+    active:"ACTIVE",
+    expired:"EXPIRED"
+   }
+}
