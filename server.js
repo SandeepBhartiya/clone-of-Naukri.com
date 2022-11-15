@@ -15,29 +15,32 @@ mongoose.connect(dbconfig.DB);
 const db=mongoose.connection;
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}))
+
 db.on("error",()=>{
     console.log("ERROR...")
 });
 
 db.once("open",()=>{
     console.log("Connected....");
-    init();
+   init();
 });
 
 async function init()
 {
+    await User.collection.drop();
+    await Job.collection.drop();
+    await Company.collection.drop();
     try
     {
     
-        await User.collection.drop();
-        await Job.collection.drop();
-         await Company.collection.drop();
+      
 
         const user=await User.create({
                 name:"Sandeep",
                 email:"san@gmail.com",
                 userId:"01",
                 password:bcrypt.hashSync("Welcome",8),
+                userType:"ADMIN"
 
         });
         const job=await Job.create({
@@ -67,6 +70,8 @@ async function init()
 
 require("./routes/auth.routes")(app);
 require("./routes/job.routes")(app);
+require("./routes/company.routes")(app);
+
 app.listen(serverconfig.PORT,()=>{
     console.log("I Am Listening AT:",serverconfig.PORT)
 });

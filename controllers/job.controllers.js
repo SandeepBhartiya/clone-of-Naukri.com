@@ -19,7 +19,10 @@ exports.createJob=async (req,res)=>{
     }
     try
     {
+        const user=await User.findOne({userId:req.user})
         const newJob=await Job.create(obj);
+        user.jobPublish.push(newJob);
+        await user.save();
         const n=display(newJob);
         res.status(201).send(n) 
     }catch(err)
@@ -51,7 +54,7 @@ exports.updateJob=async (req,res)=>{
 }
 
 exports.deleteJob=async (req,res)=>{
-    const job=await Job.deleteOne({userId:req.params.id});
+    const job=await Job.deleteOne({_id:req.params.id});
     try
     {
         res.status(200).send({
