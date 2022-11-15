@@ -50,7 +50,7 @@ async function init()
         await user.save();
         await job.save();
         const company=await Company.create({
-            companyName:"InfoSys",
+            name:"InfoSys",
             address:"malad(W)"
         });
         console.log(user);
@@ -66,6 +66,7 @@ async function init()
 
 
 require("./routes/auth.routes")(app);
+require("./routes/job.routes")(app);
 app.listen(serverconfig.PORT,()=>{
     console.log("I Am Listening AT:",serverconfig.PORT)
 });
