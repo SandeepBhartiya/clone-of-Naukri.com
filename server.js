@@ -48,8 +48,8 @@ async function init()
             description:"Only Backend Developer Needed",
             vacancies:3
         });
-        job.jobseeker.push(user);
-        user.jobApplied.push(job);
+        job.jobseeker.push(user._id);
+        user.jobApplied.push(job._id);
         await user.save();
         await job.save();
         const company=await Company.create({
@@ -71,6 +71,7 @@ async function init()
 require("./routes/auth.routes")(app);
 require("./routes/job.routes")(app);
 require("./routes/company.routes")(app);
+require("./routes/user.routes")(app);
 
 app.listen(serverconfig.PORT,()=>{
     console.log("I Am Listening AT:",serverconfig.PORT)

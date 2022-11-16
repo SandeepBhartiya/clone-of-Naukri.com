@@ -66,6 +66,20 @@ const isAdmin=async(req,res,next)=>{
         })
     }
 }
+const isOwner=async(req,res,next)=>{
+    const user=await User.findOne({userId:req.userId});
+    if(user.userId==req.body.userId)
+    {
+        next();
+    }
+    else
+    {
+        return res.status(403).send({
+            message:"Failed!!! Only User can access this endpoint"
+        })
+    }
+}
+
 const isAdminorOwner=async(req,res,next)=>{
     const user=await User.findOne({userId:req.userId});
     if(user.userId==req.body.userId ||user.userType==userType.admin)
@@ -79,7 +93,19 @@ const isAdminorOwner=async(req,res,next)=>{
         })
     }
 }
-
+const isJobSeeker=async(req,res,next)=>{
+    const user=await User.findOne({userId:req.userId});
+    if(user.userType==userType.jobseeker)
+    {
+        next();
+    }
+    else
+    {
+        return res.status(403).send({
+            message:"Failed!!! Only jobseeker can access this endpoint"
+        })
+    }
+}
 const search=(user)=>{
     if(!user)
     {
@@ -89,10 +115,12 @@ const search=(user)=>{
     }
 }
 const authVerify={
-    jwtVerify:jwtVerify,
-    isAdminorHR:isAdminorHR,
-    isHr:isHr,
     isAdminorOwner:isAdminorOwner,
-    isAdmin:isAdmin
+    isAdminorHR:isAdminorHR,
+    jwtVerify:jwtVerify,
+    isAdmin:isAdmin,
+    isOwner:isOwner,
+    isHr:isHr,
+    isJobSeeker:isJobSeeker
 }
 module.exports=authVerify

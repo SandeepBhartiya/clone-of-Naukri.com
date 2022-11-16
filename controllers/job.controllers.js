@@ -19,10 +19,10 @@ exports.createJob=async (req,res)=>{
     }
     try
     {
-        const user=await User.findOne({userId:req.user})
+        // const user=await User.findOne({userId:req.user})
         const newJob=await Job.create(obj);
-        user.jobPublish.push(newJob);
-        await user.save();
+        // user.jobPublish.push(newJob);
+        // await user.save();
         const n=display(newJob);
         res.status(201).send(n) 
     }catch(err)
